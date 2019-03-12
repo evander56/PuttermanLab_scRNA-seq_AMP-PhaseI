@@ -1,0 +1,63 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+\begin{align*}
+dropseq <- read.csv(“Expression Matrix.csv”, header = TRUE, row.names = 1)
+library(Seurat)
+library(dplyr)
+ubiq <- c(rownames(dropseq[grep("^MT-", rownames(dropseq)), ]),
+          rownames(dropseq[grep("^RPS", rownames(dropseq)), ]),
+          rownames(dropseq[grep("^RPL", rownames(dropseq)), ]),
+          rownames(dropseq[grep("^RBP", rownames(dropseq)), ]),
+          rownames(dropseq[grep("HLA", rownames(dropseq)), ]),
+          rownames(dropseq[grep("IGH", rownames(dropseq)), ]),
+          rownames(dropseq[grep("IGKC", rownames(dropseq)), ]),
+          rownames(dropseq[grep("IGLL", rownames(dropseq)), ]),
+          rownames(dropseq[grep("MALAT1", rownames(dropseq)), ]))
+
+
+dropseq <- dropseq[!rownames(dropseq) %in% ubiq, ]
+
+dropseq <- dropseq[,colSums(dropseq) > 10000]
+  
+drop1 <- CreateSeuratObject(raw.data = dropseq,names.field = 3, names.delim = "_")
+drop1 <- NormalizeData(object = drop1)
+drop1 <- ScaleData(object = drop1)
+drop1 <- FindVariableGenes(object = drop1, do.plot = FALSE)
+
+drop1 <- RunPCA(object = drop1)
+
+drop1 <- RunTSNE(object = drop1, reduction.use = "pca", dims.use = 1:11, do.fast = TRUE)
+
+drop1 <- FindClusters(object = drop1, reduction.type = "pca", dims.use = 1:11, 
+                     save.SNN = TRUE, resolution = .4)
+p1 <- TSNEPlot(object = drop1, group.by = "orig.ident", do.return = TRUE, pt.size = 0.5)
+p2 <- TSNEPlot(object = drop1, do.return = TRUE, pt.size = 0.5)
+plot_grid(p1)
+plot_grid(p2)
+
+drop1.markers <- FindAllMarkers(drop1, only.pos = TRUE, min.pct = 0.25, thresh.use = 0.25)
+drop1.markers %>% group_by(cluster) %>% top_n(10, avg_logFC) -> top10
+DoHeatmap(drop1, genes.use = top10$gene, order.by.ident = TRUE, slim.col.label = TRUE, remove.key = TRUE)
+
+
+current.cluster.ids <- c(0,1,2,3,4,5,6,7,8,9,10,11)
+new.cluster.ids <-c("Keratinocytes",  #0
+                    "Keratinocytes", #1
+                    "Keratinocytes", #2  
+                    "Tubules",#3
+                    "Tubules", #4
+                    "Tubules", #5
+                    "Tubules", #6
+                    "Keratinocytes",#7
+                    "Mesangial", #8
+                    "Fibroblasts", #9
+                    "Endothelial", #10
+                    "Leukocytes"#11)
+drop1@ident <- plyr::mapvalues(drop1@ident, from = current.cluster.ids, to = new.cluster.ids)
+TSNEPlot(drop1, do.label = T, pt.size = 1)
+\end{align*}
+\end{document}

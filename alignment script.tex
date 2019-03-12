@@ -1,0 +1,33 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+nohup bash -c 'file=METRO331
+mkdir input
+mkdir output
+mv *.fastq.gz ./input
+cp /data8/eder/HTSEQ/mRNASeqHT_demultiplex.pl ./
+perl mRNASeqHT_demultiplex.pl -i input -o output
+cd output
+mkdir trimmed
+for x in *_R2.fastq;
+do cutadapt --nextseq-trim=20 --minimum-length 20 -o ./trimmed/${x%_R2.fastq}.fastq $x;
+done
+rm *.fastq
+cd trimmed
+mkdir trimmed2
+for x in *.fastq;
+do cutadapt --minimum-length 20 -a "A{100}" -o ./trimmed2/${x%.fastq}.fastq $x;
+done
+rm *.fastq
+cd trimmed2
+mkdir alignments
+for x in *.fastq; 
+do /data8/eder/STAR-master/bin/Linux_x86_64_static/STAR --runMode alignReads --runThreadN 12 --genomeLoad LoadAndKeep --outFilterMismatchNmax 2 --outFilterMatchNminOverLread 0.1 --outFilterScoreMinOverLread 0.1 --genomeDir /data8/eder/index2/ --readFilesIn $x --outFileNamePrefix  ./alignments/${x%.fastq};
+done
+cd alignments
+ft=`ls -d -1 $PWD/*.sam`
+/data8/eder/subread-1.5.0-p3-Linux-x86_64/bin/featureCounts --primary -t exon -g gene_name -a /data8/eder/Homo_sapiens.GRCh38.83.edited.gtf -o /data8/eder/HTSEQ/multi_expression_matrix/${file}_multi_expression.txt $ft
+\end{document}

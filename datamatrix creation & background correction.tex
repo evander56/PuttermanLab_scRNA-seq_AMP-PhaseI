@@ -1,0 +1,539 @@
+\documentclass[10pt]{article}
+\usepackage[usenames]{color} %used for font color
+\usepackage{amssymb} %maths
+\usepackage{amsmath} %maths
+\usepackage[utf8]{inputenc} %useful to type directly diacritic characters
+\begin{document}
+metrodata1 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0343_expression.txt", header = TRUE, row.names = 1)  
+metrodata2 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0344_expression.txt", header = TRUE, row.names = 1)  
+metrodata3 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5626_expression.txt", header = TRUE, row.names = 1)
+metrodata4 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5622_expression.txt", header = TRUE, row.names = 1)
+metrodata5 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5639_expression.txt", header = TRUE, row.names = 1)
+metrodata6 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0333_expression.txt", header = TRUE, row.names = 1)
+metrodata7 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5574_expression.txt", header = TRUE, row.names = 1)
+metrodata8 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5601_expression.txt", header = TRUE, row.names = 1)
+metrodata9 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0349_expression.txt", header = TRUE, row.names = 1)
+metrodata10 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5514_expression.txt", header = TRUE, row.names = 1)
+metrodata11 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5634_expression.txt", header = TRUE, row.names = 1)
+metrodata12 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5623_expression.txt", header = TRUE, row.names = 1)
+metrodata13 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5629_expression.txt", header = TRUE, row.names = 1)
+metrodata14 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5158_expression.txt", header = TRUE, row.names = 1)
+metrodata15 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0340_expression.txt", header = TRUE, row.names = 1)
+metrodata16 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0350_expression.txt", header = TRUE, row.names = 1)
+metrodata17 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0352_expression.txt", header = TRUE, row.names = 1)
+metrodata18 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0331_expression.txt", header = TRUE, row.names = 1)
+metrodata19 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5161_expression.txt", header = TRUE, row.names = 1)
+metrodata20 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5668_expression.txt", header = TRUE, row.names = 1)
+metrodata21 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5685_expression.txt", header = TRUE, row.names = 1)
+metrodata22 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5694_expression.txt", header = TRUE, row.names = 1)
+metrodata23 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO5627_expression.txt", header = TRUE, row.names = 1)
+metrodata24 <- read.table("E:/Dropbox/F800 Manuscript/expression_matrix/METRO0348_expression.txt", header = TRUE, row.names = 1)
+
+#Subset out extraneous columns
+metrodata1 <- metrodata1[ , c(6:805)]
+metrodata2 <- metrodata2[ , c(6:805)]
+metrodata3 <- metrodata3[ , c(6:805)]
+metrodata4 <- metrodata4[ , c(6:805)]
+metrodata5 <- metrodata5[ , c(6:805)]
+metrodata6 <- metrodata6[ , c(6:805)]
+metrodata7 <- metrodata7[ , c(6:805)]
+metrodata8 <- metrodata8[ , c(6:805)]
+metrodata9 <- metrodata9[ , c(6:805)]
+metrodata10 <- metrodata10[ , c(6:805)]
+metrodata11 <- metrodata11[ , c(6:805)]
+metrodata12 <- metrodata12[ , c(6:805)]
+metrodata13 <- metrodata13[ , c(6:805)]
+metrodata14 <- metrodata14[ , c(6:805)]
+metrodata15 <- metrodata15[ , c(6:805)]
+metrodata16 <- metrodata16[ , c(6:805)]
+metrodata17 <- metrodata17[ , c(6:805)]
+metrodata18 <- metrodata18[ , c(6:805)]
+metrodata19 <- metrodata19[ , c(6:805)]
+metrodata20 <- metrodata20[ , c(6:805)]
+metrodata21 <- metrodata21[ , c(6:805)]
+metrodata22 <- metrodata22[ , c(6:805)]
+metrodata23 <- metrodata23[ , c(6:805)]
+metrodata24 <- metrodata24[ , c(6:805)]
+
+##rename columns for consistency
+t =1
+for (i in colnames(metrodata1)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub(".KidneyAligned.out.sam", '', j)
+  j = sub(".SkinAligned.out.sam", '', j)
+  colnames(metrodata1)[t] <- j
+  t = t + 1
+}
+
+t =1
+for (i in colnames(metrodata2)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub(".KidneyAligned.out.sam", '', j)
+  j = sub(".SkinAligned.out.sam", '', j)
+  colnames(metrodata2)[t] <- j
+  t = t + 1
+}
+
+t =1
+for (i in colnames(metrodata3)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub(".KidneyAligned.out.sam", '', j)
+  j = sub(".SkinAligned.out.sam", '', j)
+  colnames(metrodata3)[t] <- j
+  t = t + 1
+}
+
+t = 1
+for (i in colnames(metrodata4)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata4)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata5)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata5)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata6)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub(".fastqAligned.out.sam", '', j)
+  colnames(metrodata6)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata7)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata7)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata8)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata8)[t] <- j
+  t = t + 1
+}
+
+t = 1
+for (i in colnames(metrodata9)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata9)[t] <- j
+  t = t + 1
+}
+
+t = 1
+for (i in colnames(metrodata10)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata10)[t] <- j
+  t = t + 1
+}
+
+t = 1
+for (i in colnames(metrodata11)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata11)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata12)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata12)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata13)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub(".fastqAligned.out.sam", '', j)
+  colnames(metrodata13)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata14)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata14)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata15)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata15)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata16)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata16)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata17)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata17)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata18)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata18)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata19)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata19)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata20)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata20)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata21)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata21)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata22)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata22)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata23)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata23)[t] <- j
+  t = t + 1
+}
+t = 1
+for (i in colnames(metrodata24)){
+  j = sub("X.data8.eder.HTSEQ.*.alignments.", '', i)
+  j = sub("Aligned.out.sam", '', j)
+  colnames(metrodata24)[t] <- j
+  t = t + 1
+}
+metrodata1 <- metrodata1[ , order(names(metrodata1))]
+metrodata2 <- metrodata2[ , order(names(metrodata2))]
+metrodata3 <- metrodata3[ , order(names(metrodata3))]
+metrodata4 <- metrodata4[ , order(names(metrodata4))]
+metrodata5 <- metrodata5[ , order(names(metrodata5))]
+metrodata6 <- metrodata6[ , order(names(metrodata6))]
+metrodata7 <- metrodata7[ , order(names(metrodata7))]
+metrodata8 <- metrodata8[ , order(names(metrodata8))]
+metrodata9 <- metrodata9[ , order(names(metrodata9))]
+metrodata10 <- metrodata10[ , order(names(metrodata10))]
+metrodata11<- metrodata11[ , order(names(metrodata11))]
+metrodata12<- metrodata12[ , order(names(metrodata12))]
+metrodata13<- metrodata13[ , order(names(metrodata13))]
+metrodata14<- metrodata14[ , order(names(metrodata14))]
+metrodata15<- metrodata15[ , order(names(metrodata15))]
+metrodata16<- metrodata16[ , order(names(metrodata16))]
+metrodata17<- metrodata17[ , order(names(metrodata17))]
+metrodata18<- metrodata18[ , order(names(metrodata18))]
+metrodata19<- metrodata19[ , order(names(metrodata19))]
+metrodata20<- metrodata20[ , order(names(metrodata20))]
+metrodata21<- metrodata21[ , order(names(metrodata21))]
+metrodata22<- metrodata22[ , order(names(metrodata22))]
+metrodata23<- metrodata23[ , order(names(metrodata23))]
+metrodata24<- metrodata24[ , order(names(metrodata24))]
+
+colnames(metrodata1)[c(1:400)] <- paste(colnames(metrodata1)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata1)[c(401:ncol(metrodata1))] <- paste(colnames(metrodata1)[c(401:ncol(metrodata1))], "Skin", sep = '.')
+
+colnames(metrodata2)[c(1:400)] <- paste(colnames(metrodata2)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata2)[c(401:ncol(metrodata2))] <- paste(colnames(metrodata2)[c(401:ncol(metrodata2))], "Skin", sep = '.')
+
+colnames(metrodata3)[c(1:400)] <- paste(colnames(metrodata3)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata3)[c(401:ncol(metrodata3))] <- paste(colnames(metrodata3)[c(401:ncol(metrodata3))], "Skin", sep = '.')
+
+colnames(metrodata4)[c(1:400)] <- paste(colnames(metrodata4)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata4)[c(400:ncol(metrodata4))] <- paste(colnames(metrodata4)[c(400:ncol(metrodata4))], "Skin", sep = '.')
+
+colnames(metrodata5)[c(1:400)] <- paste(colnames(metrodata5)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata5)[c(401:ncol(metrodata5))] <- paste(colnames(metrodata5)[c(401:ncol(metrodata5))], "Skin", sep = '.')
+
+colnames(metrodata6)[c(1:400)] <- paste(colnames(metrodata6)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata6)[c(401:ncol(metrodata6))] <- paste(colnames(metrodata6)[c(401:ncol(metrodata6))], "Skin", sep = '.')
+
+colnames(metrodata7)[c(1:400)] <- paste(colnames(metrodata7)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata7)[c(401:ncol(metrodata7))] <- paste(colnames(metrodata7)[c(401:ncol(metrodata7))], "Skin", sep = '.')
+
+colnames(metrodata8)[c(1:400)] <- paste(colnames(metrodata8)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata8)[c(401:ncol(metrodata8))] <- paste(colnames(metrodata8)[c(401:ncol(metrodata8))], "Skin", sep = '.')
+
+colnames(metrodata9)[c(1:400)] <- paste(colnames(metrodata9)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata9)[c(401:ncol(metrodata9))] <- paste(colnames(metrodata9)[c(401:ncol(metrodata9))], "Skin", sep = '.')
+
+colnames(metrodata10)[c(1:400)] <- paste(colnames(metrodata10)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata10)[c(401:ncol(metrodata10))] <- paste(colnames(metrodata10)[c(401:ncol(metrodata10))], "Skin", sep = '.')
+
+colnames(metrodata11)[c(1:400)] <- paste(colnames(metrodata11)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata11)[c(401:ncol(metrodata11))] <- paste(colnames(metrodata11)[c(401:ncol(metrodata11))], "Skin", sep = '.')
+
+colnames(metrodata12)[c(1:400)] <- paste(colnames(metrodata12)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata12)[c(401:ncol(metrodata12))] <- paste(colnames(metrodata12)[c(401:ncol(metrodata12))], "Skin", sep = '.')
+
+colnames(metrodata13)[c(1:400)] <- paste(colnames(metrodata13)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata13)[c(401:ncol(metrodata13))] <- paste(colnames(metrodata13)[c(401:ncol(metrodata13))], "Skin", sep = '.')
+
+colnames(metrodata14)[c(1:400)] <- paste(colnames(metrodata14)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata14)[c(401:ncol(metrodata14))] <- paste(colnames(metrodata14)[c(401:ncol(metrodata14))], "Skin", sep = '.')
+
+colnames(metrodata15)[c(1:400)] <- paste(colnames(metrodata15)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata15)[c(401:ncol(metrodata15))] <- paste(colnames(metrodata15)[c(401:ncol(metrodata15))], "Kidney", sep = '.')
+
+colnames(metrodata16)[c(1:400)] <- paste(colnames(metrodata16)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata16)[c(401:ncol(metrodata16))] <- paste(colnames(metrodata16)[c(401:ncol(metrodata16))], "Kidney", sep = '.')
+
+colnames(metrodata17)[c(1:400)] <- paste(colnames(metrodata17)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata17)[c(401:ncol(metrodata17))] <- paste(colnames(metrodata17)[c(401:ncol(metrodata17))], "Skin", sep = '.')
+
+colnames(metrodata18)[c(1:400)] <- paste(colnames(metrodata18)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata18)[c(401:ncol(metrodata18))] <- paste(colnames(metrodata18)[c(401:ncol(metrodata18))], "Skin", sep = '.')
+
+colnames(metrodata19)[c(1:400)] <- paste(colnames(metrodata19)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata19)[c(401:ncol(metrodata19))] <- paste(colnames(metrodata19)[c(401:ncol(metrodata19))], "Skin", sep = '.')
+
+colnames(metrodata20)[c(1:400)] <- paste(colnames(metrodata20)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata20)[c(401:ncol(metrodata20))] <- paste(colnames(metrodata20)[c(401:ncol(metrodata20))], "Skin", sep = '.')
+
+colnames(metrodata21)[c(1:400)] <- paste(colnames(metrodata21)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata21)[c(401:ncol(metrodata21))] <- paste(colnames(metrodata21)[c(401:ncol(metrodata21))], "Kidney", sep = '.')
+
+colnames(metrodata22)[c(1:400)] <- paste(colnames(metrodata22)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata22)[c(401:ncol(metrodata22))] <- paste(colnames(metrodata22)[c(401:ncol(metrodata22))], "Skin", sep = '.')
+
+colnames(metrodata23)[c(1:400)] <- paste(colnames(metrodata23)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata23)[c(401:ncol(metrodata23))] <- paste(colnames(metrodata23)[c(401:ncol(metrodata23))], "Skin", sep = '.')
+
+colnames(metrodata24)[c(1:400)] <- paste(colnames(metrodata24)[c(1:400)], "Kidney", sep = '.')
+colnames(metrodata24)[c(401:ncol(metrodata24))] <- paste(colnames(metrodata24)[c(401:ncol(metrodata24))], "Skin", sep = '.')
+
+###########################Dataframe Setup
+
+
+###Select wells with cell
+
+screen <- function(sheet, patient) {
+  df <- read.csv(sheet, header = TRUE, row.names = 1)
+  z <-data.frame()
+  u = patient
+  x = 1
+  for (i in colnames(df)) {
+    for (j in rownames(df)) {
+      z[x,1] <- paste(i,j, sep = "_")
+      z[x,2] <- paste(df[j,i])
+      x = x +1
+    }
+  }
+  
+  for (i in c(1:400)){
+    z[i,1] <- paste(z[i,1],u, sep ="_")
+    z[i,1] <- paste(z[i,1],"Kidney", sep =".")
+  }
+  
+  for (i in c(401:800)){
+    z[i,1] <- paste(z[i,1],u, sep ="_")
+    z[i,1] <- paste(z[i,1],"Skin", sep =".")
+  }
+  return(z)
+}
+
+screen2 <- function(sheet, patient) {
+  df <- read.csv(sheet, header = TRUE, row.names = 1)
+  z <-data.frame()
+  u = patient
+  x = 1
+  for (i in colnames(df)) {
+    for (j in rownames(df)) {
+      z[x,1] <- paste(i,j, sep = "_")
+      z[x,2] <- paste(df[j,i])
+      x = x +1
+    }
+  }
+  
+  for (i in c(1:400)){
+    z[i,1] <- paste(z[i,1],u, sep ="_")
+    z[i,1] <- paste(z[i,1],"Kidney", sep =".")
+  }
+  
+  for (i in c(401:800)){
+    z[i,1] <- paste(z[i,1],u, sep ="_")
+    z[i,1] <- paste(z[i,1],"Kidney", sep =".")
+  }
+  return(z)
+}
+
+ds1 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0343.csv", "METRO0343")
+ds2 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0344.csv", "METRO0344")
+ds3 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5626.csv", "METRO5626")
+ds4 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5622.csv", "METRO5622")
+ds5 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5639.csv", "METRO5639")
+ds6 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0333.csv", "METRO0333")
+ds7 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5574.csv", "METRO5574")
+ds8 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5601.csv", "METRO5601")
+ds9 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0349.csv", "METRO0349")
+ds10 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5514.csv", "METRO5514")
+ds11 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5634.csv", "METRO5634")
+ds12 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5623.csv", "METRO5623")
+ds13 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5629.csv", "METRO5629")
+ds14 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5158.csv", "METRO5158")
+ds15 <- screen2("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0340.csv", "METRO0340")
+ds16 <- screen2("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0350.csv", "METRO0350")
+ds17 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0352.csv", "METRO0352")
+ds18 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0331.csv", "METRO0331")
+ds19 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5161.csv", "METRO5161")
+ds20 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5668.csv", "METRO5668")
+ds21 <- screen2("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5685.csv", "METRO5685")
+ds22 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5694.csv", "METRO5694")
+ds23 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO5627.csv", "METRO5627")
+ds24 <- screen("E:/Dropbox/F800 Manuscript/Microscope Assignments/METRO0348.csv", "METRO0348")
+
+ds <- data.frame(c(ds1$V1, ds2$V1, ds3$V1, ds4$V1, ds5$V1, ds6$V1, 
+                   ds7$V1, ds8$V1, ds9$V1,ds10$V1,ds11$V1,ds12$V1,
+                   ds13$V1, ds14$V1, ds15$V1, ds16$V1, ds17$V1, ds18$V1,
+                   ds19$V1, ds20$V1, ds21$V1, ds22$V1, ds23$V1, ds24$V1))
+
+ds[2]<-c(ds1$V2, ds2$V2, ds3$V2, ds4$V2, ds5$V2, ds6$V2, 
+         ds7$V2, ds8$V2, ds9$V2, ds10$V2,ds11$V2,ds12$V2,
+         ds13$V2,ds14$V2,ds15$V2, ds16$V2, ds17$V2, ds18$V2,
+         ds19$V2, ds20$V2, ds21$V2, ds22$V2, ds23$V2, ds24$V2)
+
+colnames(ds) <- c("cell_position", "cell_number")
+
+oneCell <- subset(ds, ds$cell_number == 1)
+noCell <- subset(ds, ds$cell_number == 0)
+#write.csv(ds,"C:/users/evan/Dropbox/Presentation/Microscope Assignments/microscope_observations_master.csv")
+
+##### Background subtraction
+subtractBackground <- function(df, assignment){
+  df <- df[, which(colSums(df) > 20000)]
+  df <- df[, which(colSums(df) < 1000000)]
+  
+  oneCell <- subset(assignment, assignment$cell_number == 1)
+  noCell <- subset(assignment, assignment$cell_number == 0)
+  
+  empty <- df[,colnames(df)%in% noCell$cell_position]
+  full <- df[,colnames(df)%in% oneCell$cell_position]
+  
+  subtracted <- sweep(full, 1, rowMeans(empty), '-')
+  subtracted[subtracted < 0] <- 0
+  return(subtracted)
+}
+
+subtractBackground2 <- function(df, assignment){
+  df <- df[, which(colSums(df) > 0)]
+  df <- df[, which(colSums(df) < 1000000)]
+  
+  oneCell <- subset(assignment, assignment$cell_number == 1)
+  noCell <- subset(assignment, assignment$cell_number == 0)
+  
+  empty <- df[,colnames(df)%in% noCell$cell_position]
+  full <- df[,colnames(df)%in% oneCell$cell_position]
+  
+  subtracted <- sweep(full, 1, rowMeans(empty), '-')
+  subtracted[subtracted < 0] <- 0
+  return(subtracted)
+}
+
+metrodata1 <- subtractBackground(metrodata1, ds)
+metrodata2 <- subtractBackground(metrodata2, ds)
+metrodata3 <- subtractBackground(metrodata3, ds)
+metrodata4 <- subtractBackground(metrodata4, ds)
+metrodata5 <- subtractBackground(metrodata5, ds)
+metrodata6 <- subtractBackground(metrodata6, ds)
+metrodata7 <- subtractBackground(metrodata7, ds)
+metrodata8 <- subtractBackground(metrodata8, ds)
+metrodata9 <- subtractBackground(metrodata9, ds)
+metrodata10 <- subtractBackground(metrodata10, ds)
+metrodata11 <- subtractBackground2(metrodata11, ds)
+metrodata12 <- subtractBackground(metrodata12, ds)
+metrodata13 <- subtractBackground(metrodata13, ds)
+metrodata14 <- subtractBackground(metrodata14, ds)
+metrodata15 <- subtractBackground(metrodata15, ds)
+metrodata16 <- subtractBackground2(metrodata16, ds)
+metrodata17 <- subtractBackground(metrodata17, ds)
+metrodata18 <- subtractBackground(metrodata18, ds)
+metrodata19 <- subtractBackground2(metrodata19, ds)
+metrodata20 <- subtractBackground(metrodata20, ds)
+metrodata21 <- subtractBackground(metrodata21, ds)
+metrodata22 <- subtractBackground(metrodata22, ds)
+metrodata23 <- subtractBackground2(metrodata23, ds)
+metrodata24 <- subtractBackground(metrodata24, ds)
+
+####Merge files into one
+metrodata1$gene <- rownames(metrodata1)
+metrodata2$gene <- rownames(metrodata2)
+metrodata3$gene <- rownames(metrodata3)
+metrodata4$gene <- rownames(metrodata4)
+metrodata5$gene <- rownames(metrodata5)
+metrodata6$gene <- rownames(metrodata5)
+metrodata7$gene <- rownames(metrodata5)
+metrodata8$gene <- rownames(metrodata8)
+metrodata9$gene <- rownames(metrodata9)
+metrodata10$gene <- rownames(metrodata10)
+metrodata11$gene <- rownames(metrodata11)
+metrodata12$gene <- rownames(metrodata12)
+metrodata13$gene <- rownames(metrodata13)
+metrodata14$gene <- rownames(metrodata14)
+metrodata15$gene <- rownames(metrodata15)
+metrodata16$gene <- rownames(metrodata16)
+metrodata17$gene <- rownames(metrodata17)
+metrodata18$gene <- rownames(metrodata18)
+metrodata19$gene <- rownames(metrodata19)
+metrodata20$gene <- rownames(metrodata20)
+metrodata21$gene <- rownames(metrodata21)
+metrodata22$gene <- rownames(metrodata22)
+metrodata23$gene <- rownames(metrodata23)
+metrodata24$gene <- rownames(metrodata24)
+
+metrodata <- merge(metrodata1, metrodata2)
+metrodata <- merge(metrodata, metrodata3)
+metrodata <- merge(metrodata, metrodata4)
+metrodata <- merge(metrodata, metrodata5)
+metrodata <- merge(metrodata, metrodata6)
+metrodata <- merge(metrodata, metrodata7)
+metrodata <- merge(metrodata, metrodata8)
+metrodata <- merge(metrodata, metrodata9)
+metrodata <- merge(metrodata, metrodata10)
+metrodata <- merge(metrodata, metrodata11)
+metrodata <- merge(metrodata, metrodata12)
+metrodata <- merge(metrodata, metrodata13)
+metrodata <- merge(metrodata, metrodata14)
+metrodata <- merge(metrodata, metrodata15)
+metrodata <- merge(metrodata, metrodata16)
+metrodata <- merge(metrodata, metrodata17)
+metrodata <- merge(metrodata, metrodata18)
+metrodata <- merge(metrodata, metrodata19)
+metrodata <- merge(metrodata, metrodata20)
+metrodata <- merge(metrodata, metrodata21)
+metrodata <- merge(metrodata, metrodata22)
+metrodata <- merge(metrodata, metrodata23)
+metrodata <- merge(metrodata, metrodata24)
+
+
+row.names(metrodata) <- metrodata$gene
+metrodata <- subset(metrodata, select = -1)
+
+\end{document}
